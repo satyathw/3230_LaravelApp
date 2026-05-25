@@ -65,78 +65,76 @@
 
             <tbody>
 
-                @forelse($categories as $category)
+@forelse($categories as $category)
 
-                <tr class="border-b">
+<tr class="border-b">
 
-                    <td class="p-4">{{ $category->id }}</td>
+    <td class="p-4">{{ $category->id }}</td>
 
-                    <td class="p-4">
+    <td class="p-4">
 
-                        {{-- FORM EDIT --}}
-                        <form action="{{ route('admin.categories.update', $category->id) }}"
-                              method="POST"
-                              class="flex gap-2">
+        <form action="{{ route('admin.categories.update', $category->id) }}"
+              method="POST"
+              class="flex gap-2">
 
-                            @csrf
-                            @method('PUT')
+            @csrf
+            @method('PUT')
 
-                            <input type="text"
-                                   name="name"
-                                   value="{{ $category->name }}"
-                                   class="border rounded-lg px-3 py-2 w-full">
+            <input type="text"
+                   name="name"
+                   value="{{ $category->name }}"
+                   class="border rounded-lg px-3 py-2 w-full">
 
-                    </td>
+    </td>
 
-                    <td class="p-4">
-                        {{ $category->created_at }}
-                    </td>
+    <td class="p-4">
+        {{ $category->created_at }}
+    </td>
 
-                    <td class="p-4">
-                        {{ $category->updated_at }}
-                    </td>
+    <td class="p-4">
+        {{ $category->updated_at }}
+    </td>
 
-                    <td class="p-4">
+    <td class="p-4">
 
-                            <div class="flex gap-2">
+        <div class="flex gap-2">
 
-                                <button type="submit"
-                                        class="bg-yellow-500 text-white px-4 py-2 rounded-lg">
-                                    Edit
-                                </button>
+            <button type="submit"
+                    class="bg-yellow-500 text-white px-4 py-2 rounded-lg">
+                Edit
+            </button>
 
-                        </form>
+        </form>
 
-                        {{-- DELETE --}}
-                        <form action="{{ route('admin.categories.destroy', $category->id) }}"
-                              method="POST">
+        <form action="{{ route('admin.categories.destroy', $category->id) }}"
+              method="POST">
 
-                            @csrf
-                            @method('DELETE')
+            @csrf
+            @method('DELETE')
 
-                            <button type="submit"
-                                    onclick="return confirm('Yakin hapus?')"
-                                    class="bg-red-500 text-white px-4 py-2 rounded-lg">
-                                Hapus
-                            </button>
+            <button type="submit"
+                    onclick="return confirm('Yakin hapus?')"
+                    class="bg-red-500 text-white px-4 py-2 rounded-lg">
+                Hapus
+            </button>
 
-                        </form>
+        </form>
 
-                            </div>
+        </div>
 
-                    </td>
+    </td>
 
-                </tr>
+</tr>
 
-                @empty
+@empty
 
-                <tr>
-                    <td colspan="5" class="text-center p-6">
-                        Belum ada kategori
-                    </td>
-                </tr>
+<tr>
+    <td colspan="5" class="text-center p-6">
+        Belum ada kategori
+    </td>
+</tr>
 
-                @endforelse
+@endforelse
 
             </tbody>
 

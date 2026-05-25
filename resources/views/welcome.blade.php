@@ -217,9 +217,10 @@
 
                     @if($partner->logo_url)
 
-                        <img src="{{ $partner->logo_url }}"
-                             alt="{{ $partner->name }}"
-                             class="w-24 h-24 object-contain mx-auto mb-4">
+                        <img src="{{ asset('storage/' . $partner->logo) }}"
+     <img src="{{ asset('storage/' . $partner->logo) }}"
+     alt="{{ $partner->name }}"
+     class="h-16 object-contain mx-auto">
 
                     @else
 
