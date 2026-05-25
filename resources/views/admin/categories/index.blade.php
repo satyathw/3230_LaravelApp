@@ -7,46 +7,41 @@
 
 <div class="bg-white p-6 rounded-3xl shadow">
 
-    {{-- FORM TAMBAH --}}
-    <form action="{{ route('admin.categories.store') }}" method="POST" class="mb-6">
-        @csrf
+    {{-- BUTTON TAMBAH --}}
+    <div class="mb-6">
 
-        <div class="flex gap-4">
-            <input type="text"
-                   name="name"
-                   placeholder="Masukkan nama kategori"
-                   class="w-full border rounded-xl px-4 py-3">
+        <a href="{{ route('admin.categories.create') }}"
+           class="bg-indigo-600 text-white px-6 py-3 rounded-xl inline-block">
 
-            <button type="submit"
-                    class="bg-indigo-600 text-white px-6 py-3 rounded-xl">
-                Tambah
-            </button>
-        </div>
-    </form>
+            Tambah Kategori
 
+        </a>
+
+    </div>
 
     {{-- SEARCH --}}
-<div class="mb-4 flex justify-between">
+    <div class="mb-4 flex justify-between">
 
-    <form action="{{ route('admin.categories.index') }}"
-          method="GET"
-          class="flex gap-2">
+        <form action="{{ route('admin.categories.index') }}"
+              method="GET"
+              class="flex gap-2">
 
-        <input type="text"
-               name="search"
-               placeholder="Cari kategori..."
-               value="{{ request('search') }}"
-               class="border px-4 py-2 rounded-xl">
+            <input type="text"
+                   name="search"
+                   placeholder="Cari kategori..."
+                   value="{{ request('search') }}"
+                   class="border px-4 py-2 rounded-xl">
 
-        <button type="submit"
-                class="bg-indigo-600 text-white px-4 py-2 rounded-xl">
-            Search
-        </button>
+            <button type="submit"
+                    class="bg-indigo-600 text-white px-4 py-2 rounded-xl">
 
-    </form>
+                Search
 
-</div>
+            </button>
 
+        </form>
+
+    </div>
 
     {{-- TABEL --}}
     <div class="overflow-x-auto">
@@ -54,6 +49,7 @@
         <table class="w-full">
 
             <thead class="bg-slate-100">
+
                 <tr>
                     <th class="p-4">ID</th>
                     <th class="p-4">Nama</th>
@@ -61,80 +57,79 @@
                     <th class="p-4">Updated At</th>
                     <th class="p-4">Aksi</th>
                 </tr>
+
             </thead>
 
             <tbody>
 
-@forelse($categories as $category)
+                @forelse($categories as $category)
 
-<tr class="border-b">
+                <tr class="border-b">
 
-    <td class="p-4">{{ $category->id }}</td>
+                    <td class="p-4">
+                        {{ $category->id }}
+                    </td>
 
-    <td class="p-4">
+                    <td class="p-4">
+                        {{ $category->name }}
+                    </td>
 
-        <form action="{{ route('admin.categories.update', $category->id) }}"
-              method="POST"
-              class="flex gap-2">
+                    <td class="p-4">
+                        {{ $category->created_at }}
+                    </td>
 
-            @csrf
-            @method('PUT')
+                    <td class="p-4">
+                        {{ $category->updated_at }}
+                    </td>
 
-            <input type="text"
-                   name="name"
-                   value="{{ $category->name }}"
-                   class="border rounded-lg px-3 py-2 w-full">
+                    <td class="p-4">
 
-    </td>
+                        <div class="flex gap-2">
 
-    <td class="p-4">
-        {{ $category->created_at }}
-    </td>
+                            {{-- EDIT --}}
+                            <a href="{{ route('admin.categories.edit', $category->id) }}"
+                               class="bg-yellow-500 text-white px-4 py-2 rounded-lg">
 
-    <td class="p-4">
-        {{ $category->updated_at }}
-    </td>
+                                Edit
 
-    <td class="p-4">
+                            </a>
 
-        <div class="flex gap-2">
+                            {{-- DELETE --}}
+                            <form action="{{ route('admin.categories.destroy', $category->id) }}"
+                                  method="POST">
 
-            <button type="submit"
-                    class="bg-yellow-500 text-white px-4 py-2 rounded-lg">
-                Edit
-            </button>
+                                @csrf
+                                @method('DELETE')
 
-        </form>
+                                <button type="submit"
+                                        onclick="return confirm('Yakin hapus?')"
+                                        class="bg-red-500 text-white px-4 py-2 rounded-lg">
 
-        <form action="{{ route('admin.categories.destroy', $category->id) }}"
-              method="POST">
+                                    Hapus
 
-            @csrf
-            @method('DELETE')
+                                </button>
 
-            <button type="submit"
-                    onclick="return confirm('Yakin hapus?')"
-                    class="bg-red-500 text-white px-4 py-2 rounded-lg">
-                Hapus
-            </button>
+                            </form>
 
-        </form>
+                        </div>
 
-        </div>
+                    </td>
 
-    </td>
+                </tr>
 
-</tr>
+                @empty
 
-@empty
+                <tr>
 
-<tr>
-    <td colspan="5" class="text-center p-6">
-        Belum ada kategori
-    </td>
-</tr>
+                    <td colspan="5" class="text-center p-6">
 
-@endforelse
+                        Belum ada kategori
+
+                    </td>
+
+                </tr>
+
+                @endforelse
 
             </tbody>
 

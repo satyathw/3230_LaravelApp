@@ -59,4 +59,14 @@ class CategoryController extends Controller
         return redirect()->route('admin.categories.index')
             ->with('success', 'Kategori berhasil dihapus');
     }
+
+    public function create()
+{
+    return view('admin.categories.create');
+}
+
+public function edit(Category $category)
+{
+    return view('admin.categories.edit', compact('category'));
+}
 }
