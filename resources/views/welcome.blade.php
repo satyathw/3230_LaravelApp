@@ -41,8 +41,9 @@
                 class="absolute -bottom-10 -right-10 w-64 h-64 bg-purple-400 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000">
             </div>
 
-            <img src="assets/concert.png" alt="Concert"
-                class="rounded-[2rem] shadow-2xl relative z-10 w-full object-cover aspect-[4/5] object-center">
+           <img src="{{ asset('assets/concert.png') }}"
+     alt="Concert"
+     class="rounded-[2rem] shadow-2xl relative z-10 w-full h-[600px] object-cover">
 
             <div class="absolute -bottom-6 -left-6 glass p-6 rounded-2xl shadow-xl z-20 border border-white">
 
@@ -125,9 +126,19 @@
 
                 <div class="relative overflow-hidden aspect-[3/4]">
 
-                    <img src="https://placehold.co/200x600"
-                         alt="{{ $event->title }}"
-                         class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                   @if($event->title == 'Hackaton - Unleash Your Inner Developer')
+
+    <img src="{{ asset('assets/hackathon.png') }}"
+         alt="{{ $event->title }}"
+         class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+
+@elseif($event->title == 'AI & FUTURE TECH SUMMIT 2026')
+
+    <img src="{{ asset('assets/workshop.png') }}"
+         alt="{{ $event->title }}"
+         class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+
+@endif
 
                     <div
                         class="absolute top-4 left-4 px-3 py-1 bg-white/90 backdrop-blur rounded-lg text-xs font-bold uppercase text-indigo-600">
@@ -215,17 +226,17 @@
 
                 <div class="bg-white rounded-3xl p-8 shadow-sm hover:shadow-xl transition text-center">
 
-                    @if($partner->logo_url)
+                   @if($partner->logo)
 
-                        <img src="{{ $partner->logo_url }}"
-                             alt="{{ $partner->name }}"
-                             class="w-24 h-24 object-contain mx-auto mb-4">
+    <img src="{{ asset('storage/' . $partner->logo) }}"
+         alt="{{ $partner->name }}"
+         class="h-16 object-contain mx-auto mb-4">
 
-                    @else
+@else
 
-                        <div class="w-24 h-24 bg-slate-200 rounded-2xl mx-auto mb-4"></div>
+    <div class="w-24 h-24 bg-slate-200 rounded-2xl mx-auto mb-4"></div>
 
-                    @endif
+@endif
 
                     <h3 class="font-bold text-lg text-slate-800">
 
