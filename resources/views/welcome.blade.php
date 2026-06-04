@@ -226,9 +226,9 @@
 
                 <div class="bg-white rounded-3xl p-8 shadow-sm hover:shadow-xl transition text-center">
 
-                   @if($partner->logo)
+                  @if($partner->logo)
 
-    <img src="{{ asset('storage/' . $partner->logo) }}"
+    <img src="{{ $partner->logo }}"
          alt="{{ $partner->name }}"
          class="h-16 object-contain mx-auto mb-4">
 

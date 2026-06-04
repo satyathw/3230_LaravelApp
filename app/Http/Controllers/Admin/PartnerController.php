@@ -9,85 +9,68 @@ use Illuminate\Http\Request;
 class PartnerController extends Controller
 {
     public function index(Request $request)
-{
-    $search = $request->search;
+    {
+        $search = $request->search;
 
-    $partners = Partner::when($search, function ($query) use ($search) {
+        $partners = Partner::when($search, function ($query) use ($search) {
 
-        $query->where('name', 'LIKE', '%' . $search . '%');
+            $query->where('name', 'LIKE', '%' . $search . '%');
 
-    })->latest()->get();
+        })->latest()->get();
 
-    return view('admin.partners.index', compact('partners'));
-}
+        return view('admin.partners.index', compact('partners'));
+    }
 
-public function create()
-{
-    return view('admin.partners.create');
-}
+    public function create()
+    {
+        return view('admin.partners.create');
+    }
 
-
-public function edit(Partner $partner)
-{
-    return view('admin.partners.edit', compact('partner'));
-}
+    public function edit(Partner $partner)
+    {
+        return view('admin.partners.edit', compact('partner'));
+    }
 
     public function store(Request $request)
+{
+    $request->validate([
+        'name' => 'required',
+        'logo' => 'nullable'
+    ]);
+
+    Partner::create([
+        'name' => $request->name,
+        'logo' => $request->logo,
+    ]);
+
+    return redirect()
+        ->route('admin.partners.index')
+        ->with('success', 'Partner berhasil ditambahkan');
+}
+
+    public function update(Request $request, Partner $partner)
     {
         $request->validate([
             'name' => 'required',
-            'logo' => 'nullable|image|mimes:jpg,jpeg,png'
+            'logo_url' => 'nullable|url'
         ]);
 
-        $logoPath = null;
-
-        if ($request->hasFile('logo')) {
-
-            $logoPath = $request->file('logo')
-                                ->store('partners', 'public');
-        }
-
-        Partner::create([
+        $partner->update([
             'name' => $request->name,
-            'logo' => $logoPath,
+            'logo_url' => $request->logo_url,
         ]);
 
         return redirect()
             ->route('admin.partners.index')
-            ->with('success', 'Partner berhasil ditambahkan');
+            ->with('success', 'Partner berhasil diupdate');
     }
-
-   public function update(Request $request, Partner $partner)
-{
-    $request->validate([
-        'name' => 'required',
-        'logo' => 'nullable|image|mimes:jpg,jpeg,png'
-    ]);
-
-    $data = [
-        'name' => $request->name,
-    ];
-
-    if ($request->hasFile('logo')) {
-
-        $logoPath = $request->file('logo')
-                            ->store('partners', 'public');
-
-        $data['logo'] = $logoPath;
-    }
-
-    $partner->update($data);
-
-    return redirect()
-        ->route('admin.partners.index')
-        ->with('success', 'Partner berhasil diupdate');
-}
 
     public function destroy(Partner $partner)
     {
         $partner->delete();
 
-        return redirect()->route('admin.partners.index')
+        return redirect()
+            ->route('admin.partners.index')
             ->with('success', 'Partner berhasil dihapus');
     }
 }

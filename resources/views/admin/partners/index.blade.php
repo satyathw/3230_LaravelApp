@@ -59,16 +59,17 @@
 
                 <td class="p-4">
 
-    @if($partner->logo)
+   @if($partner->logo)
 
-        <img src="{{ asset('storage/' . $partner->logo) }}"
-             class="w-16 h-16 object-contain rounded-lg">
+    <img src="{{ $partner->logo }}"
+         alt="{{ $partner->name }}"
+         class="h-16 object-contain mx-auto mb-4">
 
-    @else
+@else
 
-        -
+    <div class="w-24 h-24 bg-slate-200 rounded-2xl mx-auto mb-4"></div>
 
-    @endif
+@endif
 
 </td>
 
