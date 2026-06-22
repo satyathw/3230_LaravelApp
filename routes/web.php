@@ -25,7 +25,8 @@ Route::get('/events/{event}', [\App\Http\Controllers\EventController::class, 'sh
 
 Route::get('/checkout', [EventController::class,'checkout'])->name('checkout');
 
-Route::get('/my-ticket', [EventController::class, 'ticket'])->name('ticket');
+Route::get('/my-ticket/{transaction}', [EventController::class, 'ticket'])
+    ->name('ticket');
 
 /*
 |--------------------------------------------------------------------------
@@ -67,3 +68,8 @@ Route::prefix('admin')->name('admin.')->group(function () {
 Route::get('/login', function () {
     return redirect('/admin/login');
 })->name('login');
+
+Route::get('/checkout/{event}', [App\Http\Controllers\CheckoutController::class, 'create'])->name('checkout.create');
+Route::post('/checkout/{event}', [App\Http\Controllers\CheckoutController::class, 'store'])->name('checkout.store');
+
+Route::get('transactions', [\App\Http\Controllers\Admin\TransactionController::class, 'index'])->name('transactions.index');
