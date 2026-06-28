@@ -37,21 +37,39 @@
                     <input type="text" placeholder="Cari Order ID, Nama, atau Email..."
                         class="flex-1 px-5 py-3 rounded-xl border-slate-200 border bg-white focus:ring-2 focus:ring-indigo-500 outline-none transition uppercase text-sm font-medium tracking-wide">
                 </div>
-                <div class="flex gap-2">
-                    <select
-                        class="px-5 py-3 rounded-xl border-slate-200 border bg-white outline-none text-sm font-bold">
-                        <option>Semua Status</option>
-                        <option class="text-green-600">Success</option>
-                        <option class="text-orange-600">Pending</option>
-                        <option class="text-rose-600">Expired</option>
-                    </select>
-                    <select
-                        class="px-5 py-3 rounded-xl border-slate-200 border bg-white outline-none text-sm font-bold">
-                        <option>Bulan Ini</option>
-                        <option>Bulan Lalu</option>
-                        <option>Tahun 2024</option>
-                    </select>
-                </div>
+                
+<form method="GET" action="{{ route('admin.transactions.index') }}" class="flex gap-2">
+
+    <select
+        name="status"
+        onchange="this.form.submit()"
+        class="px-5 py-3 rounded-xl border-slate-200 border bg-white outline-none text-sm font-bold">
+
+        <option value="">Semua Status</option>
+
+        <option value="Success" {{ request('status') == 'Success' ? 'selected' : '' }}>
+            Success
+        </option>
+
+        <option value="Pending" {{ request('status') == 'Pending' ? 'selected' : '' }}>
+            Pending
+        </option>
+
+        <option value="Expired" {{ request('status') == 'Expired' ? 'selected' : '' }}>
+            Expired
+        </option>
+
+    </select>
+
+    <select
+        class="px-5 py-3 rounded-xl border-slate-200 border bg-white outline-none text-sm font-bold">
+        <option>Bulan Ini</option>
+        <option>Bulan Lalu</option>
+        <option>Tahun 2024</option>
+    </select>
+
+</form>
+
             </div>
 
             <div class="overflow-x-auto">
