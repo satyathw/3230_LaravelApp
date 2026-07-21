@@ -11,6 +11,9 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\PartnerController;
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\TransactionController;
+use App\Http\Controllers\JabatanController;
+use App\Http\Controllers\PengurusController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -61,6 +64,9 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
         Route::resource('partners', PartnerController::class);
 
+        Route::resource('jabatan', JabatanController::class);
+
+        Route::resource('pengurus', PengurusController::class);
     });
 
 });
@@ -77,3 +83,6 @@ Route::get('transactions', [\App\Http\Controllers\Admin\TransactionController::c
 Route::get('/payment/{order_id}', [\App\Http\Controllers\CheckoutController::class, 'payment'])->name('checkout.payment');
 
 Route::get('/success/{order_id}', [\App\Http\Controllers\CheckoutController::class, 'success'])->name('checkout.success');
+
+Route::post('/midtrans/callback', [\App\Http\Controllers\MidtransWebhookController::class, 'handle']);
+
